@@ -1,0 +1,49 @@
+{% extends 'layer.html' %}
+
+{% block body %}
+  <!-- Check if there are no todos -->
+  {% if todos|length == 0 %}
+    <div class="alert alert-info text-center" role="alert">
+      <h4 class="alert-heading">No Tasks Found!</h4>
+      <p>Your to-do list is empty. Start by adding a task!</p>
+    </div>
+
+  {% else %}
+    <!-- Tasks Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover my-4">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Time</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for todo in todos %}
+            <tr>
+              <th scope="row">{{ loop.index }}</th>
+              <td>{{ todo.title }}</td>
+              <td>{{ todo.desc }}</td>
+              <td>{{ todo.date }}</td>
+              <td>
+                <div class="d-flex gap-2 justify-content-center">
+                  <!-- Delete Button -->
+                  <a href="/delete/{{ todo.sno }}" class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Task">
+                    <i class="bi bi-trash"></i> Delete
+                  </a>
+                  <!-- Update Button -->
+                  <a href="/update/{{ todo.sno }}" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Update Task">
+                    <i class="bi bi-pencil-square"></i> Update
+                  </a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+{% endblock %}
